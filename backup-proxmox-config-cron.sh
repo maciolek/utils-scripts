@@ -110,3 +110,4 @@ if [ "${COUNT}" -gt "${RETAIN_COUNT}" ]; then
 fi
 
 log "Backup zakończony sukcesem: ${TARGET_PATH}/proxmox_backup_$(date +"%Y-%m-%d-%H-%M").tar.gpg"
+echo ""
