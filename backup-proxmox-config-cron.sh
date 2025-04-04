@@ -59,11 +59,12 @@ trap cleanup EXIT
 
 # Lista ścieżek do backupu
 SOURCE_PATHS=(
-    "/etc/pve"
-    "/etc/network"
-    "/var/lib/pve-cluster"
-    "/etc/hosts"
-    "/etc/resolv.conf"
+    "/etc/pve"          	# Konfiguracja klastra i maszyn
+    "/etc/network"      	# Ustawienia sieciowe
+    "/var/lib/pve-cluster"  # Dane klastra
+    "/etc/hosts"        	# Mapowanie hostów
+    "/etc/resolv.conf"  	# Konfiguracja DNS
+	"/etc/lvm/"				# Konfiguracja LVM (jeśli używasz Logical Volume Manager)
 )
 
 log "Rozpoczęto proces backupu..."
@@ -88,15 +89,15 @@ tar -czf - -C "${TMP_DIR}" . | gpg --batch --yes --symmetric --cipher-algo AES25
 # Tworzenie katalogu docelowego, jeśli nie istnieje
 mkdir -p "${TARGET_PATH}"
 
-# Przesyłanie backupu (lokalnie)
+# Przesyłanie backupu
 log "Przesyłanie kopii..."
 mv "${BACKUP_NAME}" "${TARGET_PATH}/" || {
     log "Błąd przesyłania!"
     exit 1
 }
 
-# Rotacja backupów (lokalnie)
-log "Sprawdzanie rotacji backupów..."
+# Retencja backupów 
+log "Sprawdzanie retencji backupów..."
 BACKUP_LIST=$(ls -t "${TARGET_PATH}"/proxmox_backup_*.tar.gpg 2>/dev/null)
 COUNT=$(echo "${BACKUP_LIST}" | wc -l)
 
@@ -110,4 +111,5 @@ if [ "${COUNT}" -gt "${RETAIN_COUNT}" ]; then
 fi
 
 log "Backup zakończony sukcesem: ${TARGET_PATH}/proxmox_backup_$(date +"%Y-%m-%d-%H-%M").tar.gpg"
-echo ""
+
+echo "" >> "${LOG_FILE}"
