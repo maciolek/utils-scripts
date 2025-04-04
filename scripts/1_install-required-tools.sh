@@ -16,11 +16,11 @@ install_if_missing() {
 }
 
 # Lista wymaganych narzędzi
-TOOLS=("curl" "jq")
+TOOLS=("curl" "jq" "build-essential" "wget")
 
 # Iteracja po liście narzędzi i instalacja brakujących
 for tool in "${TOOLS[@]}"; do
     install_if_missing "$tool"
 done
 
-echo "Wszystkie wymagane narzędzia są zainstalowane."
+echo "Wszystkie wymagane narzędzia są zainstalowane"
