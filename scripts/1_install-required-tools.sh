@@ -16,7 +16,7 @@ install_if_missing() {
 }
 
 # Lista wymaganych narzędzi
-TOOLS=("curl" "jq" "build-essential" "wget")
+TOOLS=("curl" "wget" "vim" "git")
 
 # Iteracja po liście narzędzi i instalacja brakujących
 for tool in "${TOOLS[@]}"; do
