@@ -18,7 +18,7 @@ BACKUP_NAME="proxmox_backup_$(date +"%Y-%m-%d-%H-%M").tar.gpg"
 TMP_DIR="/tmp/proxmox_backup"
 
 # Ustaw ścieżkę docelową z pierwszego argumentu
-TARGET_PATH="/mnt/auto/backup_drive/backups_proxmox_config/"
+TARGET_PATH=$(readlink -f "/mnt/auto/backup_drive/backups_proxmox_config/")
 
 # Ustaw hasło szyfrujące w zmiennej środowiskowej w ~/.bashrc
 PASSPHRASE="${BACKUP_PASSWORD}"
@@ -36,7 +36,6 @@ log() {
 
 # Funkcja sprzątająca
 cleanup() {
-    log "Usuwanie tymczasowych plików..."
     rm -rf "${TMP_DIR}"
     rm -f "${BACKUP_NAME}"
 }
