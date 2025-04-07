@@ -18,20 +18,10 @@ BACKUP_NAME="proxmox_backup_$(date +\"%Y-%m-%d-%H-%M\").tar.gpg"
 TMP_DIR="/tmp/proxmox_backup"
 
 # Ustaw ścieżkę docelową z pierwszego argumentu
-if [ $# -lt 1 ]; then
-    echo "Błąd: Nie podano ścieżki docelowej."
-    echo "Użycie: $0 /ścieżka/docelowa hasło_szyfrujące"
-    exit 1
-fi
-TARGET_PATH="$1"
+TARGET_PATH="/mnt/auto/backup_drive/backups_proxmox_config/"
 
-# Ustaw hasło szyfrujące z drugiego argumentu
-if [ $# -lt 2 ]; then
-    echo "Błąd: Nie podano hasła szyfrującego."
-    echo "Użycie: $0 /ścieżka/docelowa hasło_szyfrujące"
-    exit 1
-fi
-PASSPHRASE="$2"
+# Ustaw hasło szyfrujące w zmiennej środowiskowej w ~/.bashrc
+PASSPHRASE="${BACKUP_PASSWORD}"
 
 # Pobierz aktualną datę i godzinę
 TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
