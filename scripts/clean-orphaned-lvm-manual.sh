@@ -70,6 +70,6 @@ function delete_orphaned_lvm {
 # Run script
 header_info
 find_orphaned_lvm
-delete_orphaned_lvm:
+delete_orphaned_lvm
 
 echo -e "✅ Cleanup process completed!\n"

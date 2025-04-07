@@ -1,6 +1,10 @@
 # utils-scripts
 
+<<<<<<< HEAD
 # proxmox server upgrade [At 06:00 on Wednesday]
+=======
+# update & upgrade proxmox server [At 06:00 on Wednesday]
+>>>>>>> 3dffa5a879041befb52946d37dbd0ed87a6eae51
 0 6 * * 3 /usr/bin/apt update && /usr/bin/apt full-upgrade -y && [ -f /var/run/reboot-required ] && /sbin/reboot >> /UTILS/log/proxmox-upgrade.log 2>&1
 
 # update & upgrade all LXC [At 06:00 on Thursday]

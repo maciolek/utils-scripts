@@ -6,7 +6,7 @@
 # Konfiguracja
 USERNAME="maciolek"
 REPO="utils-scripts"
-BRANCH="init"
+BRANCH="master"
 TARGET_DIR="scripts"
 
 # Tymczasowy katalog do klonowania repozytorium
