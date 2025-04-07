@@ -28,3 +28,5 @@ odblokowanie TUN dla tailscale:
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/misc/post-pve-install.sh)"
 
 ##/ dodać CRONy zgodnie README -> https://github.com/maciolek/utils-scripts {konsola PROXMOX}
+
+##/ ustaw opcje URUCHOM PRZY STARCIE i opóźnienia
