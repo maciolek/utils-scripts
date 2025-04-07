@@ -8,7 +8,7 @@
 	
 ##/ instalacja piHole + konfiguracja
 
-##/ instalacje immich + konfiguracja, do rozważenia docker WIN na mocniejszym sprzęcie
+##/ instalacje immich + konfiguracja, do rozważenia docker WIN na mocniejszym sprzęcie [FS dedykowany, cron do docker pull ]
 
 ##/ instalacja PBS + konfiguracja
 
