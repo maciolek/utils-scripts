@@ -12,7 +12,7 @@ SCRIPT_DIR=$(dirname $(readlink -f $0))
 LOG_FILE="$SCRIPT_DIR/log/proxmox_backup.log"
 
 # Ustaw nazwę pliku zaszyfrowanego
-BACKUP_NAME="proxmox_backup_$(date +\"%Y-%m-%d-%H-%M\").tar.gpg"
+BACKUP_NAME="proxmox_backup_$(date +"%Y-%m-%d-%H-%M").tar.gpg"
 
 # Tymczasowy katalog na kopię zapasową
 TMP_DIR="/tmp/proxmox_backup"
