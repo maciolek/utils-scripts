@@ -3,46 +3,38 @@
 # Użycie:
 # ./2_download-scripts.sh NAZWA_BRANCHA
 
-# Stałe zdefiniowane w skrypcie
+# Konfiguracja
 USERNAME="maciolek"
 REPO="utils-scripts"
+BRANCH="init"
 TARGET_DIR="scripts"
 
-# Sprawdź czy podano branch
-if [ "$#" -ne 1 ]; then
-    echo "Użycie: $0 <nazwa-brancha>"
-    echo "Przykład: $0 init"
+# Tymczasowy katalog do klonowania repozytorium
+TEMP_DIR=$(mktemp -d)
+
+# Klonowanie repozytorium
+echo "Klonowanie repozytorium '${REPO}' (branch: '${BRANCH}')..."
+git clone --branch "${BRANCH}" --depth 1 "https://github.com/${USERNAME}/${REPO}.git" "${TEMP_DIR}" > /dev/null 2>&1
+
+if [ $? -ne 0 ]; then
+    echo "Błąd: Nie udało się sklonować repozytorium. Sprawdź poprawność URL lub dostępność branchu."
+    rm -rf "${TEMP_DIR}"
     exit 1
 fi
 
-BRANCH="$1"
-
-# URL API GitHub
-API_URL="https://api.github.com/repos/${USERNAME}/${REPO}/git/trees/${BRANCH}?recursive=1"
-
-# Pobierz listę plików w katalogu scripts
-echo "Szukam plików w katalogu '${TARGET_DIR}' na branchu '${BRANCH}'..."
-FILES=$(curl -s "${API_URL}" | jq -r --arg dir "${TARGET_DIR}/" '.tree[] | select(.type == "blob" and .path | startswith($dir)) | .path')
-
-# Sprawdź poprawność odpowiedzi
-if [ -z "$FILES" ]; then
-    echo "Błąd: Nie znaleziono plików lub branch nie istnieje."
+# Sprawdzenie, czy katalog 'scripts' istnieje
+if [ ! -d "${TEMP_DIR}/${TARGET_DIR}" ]; then
+    echo "Błąd: Katalog '${TARGET_DIR}' nie istnieje w repozytorium."
+    rm -rf "${TEMP_DIR}"
     exit 1
 fi
 
-# Przygotuj lokalny katalog
-LOCAL_DIR="utils-scripts_${BRANCH}_scripts"
-mkdir -p "${LOCAL_DIR}"
+# Kopiowanie plików z 'scripts' do katalogu głównego
+echo "Kopiowanie plików z '${TARGET_DIR}' do katalogu głównego..."
+cp -r "${TEMP_DIR}/${TARGET_DIR}/"* .
 
-# Pobierz pliki
-echo "Rozpoczynam pobieranie do katalogu: ${LOCAL_DIR}"
-for file in $FILES; do
-    RAW_URL="https://raw.githubusercontent.com/${USERNAME}/${REPO}/${BRANCH}/${file}"
-    LOCAL_PATH="${LOCAL_DIR}/${file#${TARGET_DIR}/}"
-    
-    mkdir -p "$(dirname "${LOCAL_PATH}")"
-    echo "Pobieram: ${file}"
-    curl -s -o "${LOCAL_PATH}" "${RAW_URL}"
-done
+# Usuwanie tymczasowego katalogu
+echo "Czyszczenie tymczasowych plików..."
+rm -rf "${TEMP_DIR}"
 
-echo "Gotowe! Pobrano $(echo "$FILES" | wc -l) plików."
+echo "Gotowe! Wszystkie pliki zostały pobrane do katalogu głównego."
