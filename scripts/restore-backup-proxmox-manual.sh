@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# uruchomienie:
-# ./restore-backup-proxmox-manual.sh PLIK_BACKUP_PROXMOX.tar.gpg KATALOG_DOCELOWY "TwojeHasloSzyfrujace"
+# Uruchomienie:
+# ./restore-backup-proxmox-manual.sh ŚĆIEŻKA_DO_PLIKU_BACKUP_PROXMOX.tar.gpg "TwojeHasloSzyfrujace"
 
 # Funkcja dodająca timestamp do każdego komunikatu
 log() {
@@ -9,22 +9,29 @@ log() {
 }
 
 # Sprawdź liczbę parametrów
-if [ "$#" -ne 3 ]; then
+if [ "$#" -ne 2 ]; then
     log "Błąd: Nieprawidłowa liczba parametrów."
-    log "Użycie: $0 <plik_backupu.gpg> /ścieżka/docelowa <hasło_szyfrujące>"
+    log "Użycie: $0 <plik_backupu.gpg> <hasło_szyfrujące>"
     exit 1
 fi
 
 # Przypisz parametry do zmiennych
 ENCRYPTED_FILE="${1}"
-TARGET_PATH="${2}"
-PASSPHRASE="${3}"
+PASSPHRASE="${2}"
 
 # Sprawdź, czy plik backupu istnieje
 if [ ! -f "${ENCRYPTED_FILE}" ]; then
     log "Błąd: Plik backupu '${ENCRYPTED_FILE}' nie istnieje."
     exit 1
 fi
+
+# Pobierz nazwę pliku bez rozszerzenia
+BASE_NAME="${ENCRYPTED_FILE##*/}"
+BASE_NAME="${BASE_NAME%.tar.gpg}"
+
+# Utwórz ścieżkę docelową
+SCRIPT_DIR=$(dirname "$(readlink -f "$0")")
+TARGET_PATH="${SCRIPT_DIR}/${BASE_NAME}"
 
 # Sprawdź, czy ścieżka docelowa jest dostępna (lub ją utwórz)
 if [ ! -d "${TARGET_PATH}" ]; then

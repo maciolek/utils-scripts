@@ -7,8 +7,9 @@
 # Ustaw liczbę kopii do zachowania
 RETAIN_COUNT=60
 
-# Ustaw ścieżka do pliku logów
-LOG_FILE="/UTILS/log/proxmox_backup.log"
+# Ustaw ścieżka do pliku logów względem katalogu skryptu
+SCRIPT_DIR=$(dirname $(readlink -f $0))
+LOG_FILE="$SCRIPT_DIR/log/proxmox_backup.log"
 
 # Ustaw nazwę pliku zaszyfrowanego
 BACKUP_NAME="proxmox_backup_$(date +"%Y-%m-%d-%H-%M").tar.gpg"
@@ -17,26 +18,10 @@ BACKUP_NAME="proxmox_backup_$(date +"%Y-%m-%d-%H-%M").tar.gpg"
 TMP_DIR="/tmp/proxmox_backup"
 
 # Ustaw ścieżkę docelową z pierwszego argumentu
-TARGET_PATH="/mnt/auto/backup_drive/backups_proxmox_config/"
+TARGET_PATH=$(readlink -f "/mnt/auto/backup_drive/backups_proxmox_config/")
 
 # Ustaw hasło szyfrujące w zmiennej środowiskowej w ~/.bashrc
 PASSPHRASE="${BACKUP_PASSWORD}"
-
-###############################################
-
-# Sprawdź, czy podano ścieżkę docelową
-if [ -z "${TARGET_PATH}" ]; then
-    echo "Błąd: Nie podano ścieżki docelowej."
-    echo "Użycie: $0 /ścieżka/docelowa hasło_szyfrujące"
-    exit 1
-fi
-
-# Sprawdź, czy podano hasło szyfrujące
-if [ -z "${PASSPHRASE}" ]; then
-    echo "Błąd: Nie podano hasła szyfrującego."
-    echo "Użycie: $0 /ścieżka/docelowa hasło_szyfrujące"
-    exit 1
-fi
 
 # Pobierz aktualną datę i godzinę
 TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
@@ -51,7 +36,6 @@ log() {
 
 # Funkcja sprzątająca
 cleanup() {
-    log "Usuwanie tymczasowych plików..."
     rm -rf "${TMP_DIR}"
     rm -f "${BACKUP_NAME}"
 }

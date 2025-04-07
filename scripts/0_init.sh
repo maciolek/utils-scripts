@@ -4,22 +4,22 @@
 USERNAME="maciolek"
 REPO="utils-scripts"
 BRANCH="master"
-TARGET_DIR="scripts"
+SOURCE_DIR="scripts"
 SCRIPT1="1_install-required-tools.sh"
 SCRIPT2="2_download-scripts.sh"
 
-# URL plików w formacie RAW
-URL1="https://raw.githubusercontent.com/${USERNAME}/${REPO}/${BRANCH}/${TARGET_DIR}/${SCRIPT1}"
-URL2="https://raw.githubusercontent.com/${USERNAME}/${REPO}/${BRANCH}/${TARGET_DIR}/${SCRIPT2}"
+# URL plikow w formacie RAW
+URL1="https://raw.githubusercontent.com/${USERNAME}/${REPO}/${BRANCH}/${SOURCE_DIR}/${SCRIPT1}"
+URL2="https://raw.githubusercontent.com/${USERNAME}/${REPO}/${BRANCH}/${SOURCE_DIR}/${SCRIPT2}"
 
 # Pobierz pliki
-echo "Pobieranie plików..."
+echo "Pobieranie plikow..."
 wget -q -O "${SCRIPT1}" "${URL1}"
 wget -q -O "${SCRIPT2}" "${URL2}"
 
-# Sprawdź, czy pliki zostały pobrane
+# Sprawdź, czy pliki zostaly pobrane
 if [ -f "${SCRIPT1}" ] && [ -f "${SCRIPT2}" ]; then
-    echo "Gotowe! Pliki zostały pobrane do katalogu głównego."
+    echo "Gotowe! Pliki zostaly pobrane do katalogu glownego."
     
     # Nadaj uprawnienia 700
     echo "Nadaję uprawnienia 700..."
@@ -28,5 +28,5 @@ if [ -f "${SCRIPT1}" ] && [ -f "${SCRIPT2}" ]; then
     
     echo "Uprawnienia nadane."
 else
-    echo "Błąd: Nie udało się pobrać jednego lub obu plików."
+    echo "Blad: Nie udalo sie pobrać jednego lub obu plikow."
 fi
