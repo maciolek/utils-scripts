@@ -8,3 +8,10 @@
 
 # backup proxmox config [every day at 0.30 ]
 30 0 * * * /UTILS/backup-proxmox-config-cron.sh > /dev/null 2>> /UTILS/log/proxmox_backup.log
+
+## ONLY LXC IMMICH
+# update & upgrade immich apps [on each reboot]
+@reboot /app/immich-app/immich-update.sh
+
+# update & upgrade immich apps [At 06:00 on Tuesday]
+0 0 * * 2 /app/immich-app/immich-update.sh
