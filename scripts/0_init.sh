@@ -3,7 +3,7 @@
 # Konfiguracja
 USERNAME="maciolek"
 REPO="utils-scripts"
-BRANCH="init"
+BRANCH="master"
 TARGET_DIR="scripts"
 SCRIPT1="1_install-required-tools.sh"
 SCRIPT2="2_download-scripts.sh"
