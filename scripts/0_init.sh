@@ -14,8 +14,8 @@ URL2="https://raw.githubusercontent.com/${USERNAME}/${REPO}/${BRANCH}/${TARGET_D
 
 # Pobierz pliki
 echo "Pobieranie plików..."
-curl -s -o "${SCRIPT1}" "${URL1}"
-curl -s -o "${SCRIPT2}" "${URL2}"
+wget -q -O "${SCRIPT1}" "${URL1}"
+wget -q -O "${SCRIPT2}" "${URL2}"
 
 # Sprawdź, czy pliki zostały pobrane
 if [ -f "${SCRIPT1}" ] && [ -f "${SCRIPT2}" ]; then
