@@ -34,7 +34,7 @@ add_alias_to_bashrc() {
 }
 
 # Lista wymaganych narzędzi
-TOOLS=("curl" "wget" "vim" "git")
+TOOLS=("curl" "wget" "vim" "git" "ntfs-3g" "exfatprogs")
 
 # Iteracja po liście narzędzi i instalacja brakujących
 for tool in "${TOOLS[@]}"; do
